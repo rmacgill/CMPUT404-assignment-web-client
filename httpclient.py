@@ -51,7 +51,11 @@ class HTTPClient(object):
         return data.split("\r\n\r\n")[0]
 
     def get_body(self, data):
-        return data.split("\r\n\r\n")[1]
+        # handle the case where we have a non-existent body
+        try:
+            return data.split("\r\n\r\n")[1]
+        except:
+            return ""
     
     def sendall(self, data):
         self.socket.sendall(data.encode('utf-8'))
